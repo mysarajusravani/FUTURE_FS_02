@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CRM Dashboard</title>
+  <style>
+    body { font-family: Arial; margin:20px; }
+    input, select { margin:5px; padding:8px; }
+    button { padding:8px 15px; cursor:pointer; }
+    table { margin-top:15px; width:100%; border-collapse: collapse; }
+    th, td { border:1px solid #ccc; padding:8px; text-align:center; }
+    th { background:#f2f2f2; }
+  </style>
+</head>
+
+<body>
+
+<h1 class="title">CLIENT LEAD MANAGEMENT SYSTEM</h1>
+<h2 class="welcome">Welcome to CRM Dashboard</h2>
+<link rel="stylesheet" href="style.css">
+<button onclick="logout()">Logout</button>
+<h3>Leads Summary 📊</h3>
+
+<hr>
+
+<!-- 🔥 HERE PUT STATS -->
+<div class="stats">
+
+  <div class="stat-card">
+    <h3 id="totalLeads">0</h3>
+    <p>Total Leads</p>
+  </div>
+
+  <div class="stat-card">
+    <h3 id="newLeads">0</h3>
+    <p>New</p>
+  </div>
+
+  <div class="stat-card">
+    <h3 id="contactedLeads">0</h3>
+    <p>Contacted</p>
+  </div>
+
+  <div class="stat-card">
+    <h3 id="convertedLeads">0</h3>
+    <p>Converted</p>
+  </div>
+
+</div>
+
+<hr>
+
+<!-- 🔹 ADD LEAD SECTION -->
+<h3>Add Lead ➕</h3>
+
+<input type="text" id="leadName" placeholder="Enter Name">
+<input type="text" id="leadEmail" placeholder="Enter Email">
+
+<select id="leadStatus">
+  <option value="New">New</option>
+  <option value="Contacted">Contacted</option>
+  <option value="Converted">Converted</option>
+</select>
+<input type="text" id="leadNotes" placeholder="Enter Notes">
+<!-- IMPORTANT BUTTON -->
+<button onclick="addLead()">Add Lead</button>
+
+<hr>
+
+<h3>Search 🔍</h3>
+
+<input type="text" id="searchInput"
+placeholder="Search by name or email"
+onkeyup="searchLead()">
+
+<!-- 🔹 TABLE SECTION -->
+<h3>Leads Table 📋</h3>
+
+<table>
+  <thead>
+    <tr>
+  <th>Name</th>
+  <th>Email</th>
+  <th>Status</th>
+  <th>Notes</th>
+  <th>Actions</th>
+</tr>
+  </thead>
+
+  <tbody id="leadTable"></tbody>
+</table>
+
+<!-- 🔥 JAVASCRIPT -->
+<script>
+
+// login protection
+if(localStorage.getItem("loggedIn") !== "true") {
+  window.location.href = "login.html";
+}
+
+let leads = [];
+
+function addLead() {
+  let name = document.getElementById("leadName").value.trim();
+  let email = document.getElementById("leadEmail").value.trim();
+  let status = document.getElementById("leadStatus").value;
+  let notes = document.getElementById("leadNotes").value.trim();
+
+  if(name === "" || email === "") {
+    alert("Please enter details");
+    return;
+  }
+
+  leads.push({name, email, status, notes}); 
+
+  displayLeads();
+  updateCounts();
+
+  // clear inputs
+  document.getElementById("leadName").value = "";
+  document.getElementById("leadEmail").value = "";
+  document.getElementById("leadNotes").value = "";
+  document.getElementById("leadStatus").value = "New";
+}
+
+function displayLeads() {
+  let table = document.getElementById("leadTable");
+  table.innerHTML = "";
+
+  leads.forEach((lead, index) => {
+    table.innerHTML += `
+      <tr>
+        <td>${lead.name}</td>
+        <td>${lead.email}</td>
+        <td>${lead.status}</td>
+        <td>${lead.notes}</td>
+        <td>
+            <button onclick="editLead(${index})">Edit</button>
+            <button onclick="deleteLead(${index})">Delete</button>
+        </td>
+      </tr>
+    `;
+  });
+}
+
+function logout(){
+  localStorage.removeItem("loggedIn");
+  window.location.href = "login.html";
+}
+
+ function searchLead() {
+  let keyword = document.getElementById("searchInput").value.toLowerCase();
+  let table = document.getElementById("leadTable");
+
+  table.innerHTML = "";
+
+  leads.forEach((lead, index) => {
+    if (
+      lead.name.toLowerCase().includes(keyword) ||
+      lead.email.toLowerCase().includes(keyword)
+    ) {
+      table.innerHTML += `
+        <tr>
+          <td>${lead.name}</td>
+          <td>${lead.email}</td>
+          <td>${lead.status}</td>
+          <td>${lead.notes}</td>
+          <td>
+            <button onclick="editLead(${index})">Edit</button>
+            <button onclick="deleteLead(${index})">Delete</button>
+          </td>
+        </tr>
+      `;
+    }
+  });
+}     
+function editLead(index) {
+  let lead = leads[index];
+
+  document.getElementById("leadName").value = lead.name;
+  document.getElementById("leadEmail").value = lead.email;
+  document.getElementById("leadStatus").value = lead.status;
+  document.getElementById("leadNotes").value = lead.notes;
+  // remove old entry
+  leads.splice(index, 1);
+
+  displayLeads();
+  updateCounts();
+}
+function deleteLead(index) {
+  leads.splice(index, 1);   // remove from array
+  displayLeads();           // refresh table
+  updateCounts();           // update counts
+}
+function updateCounts() {
+  let total = leads.length;
+  let newCount = leads.filter(l => l.status === "New").length;
+  let contacted = leads.filter(l => l.status === "Contacted").length;
+  let converted = leads.filter(l => l.status === "Converted").length;
+
+  document.getElementById("totalLeads").innerText = total;
+  document.getElementById("newLeads").innerText = newCount;
+  document.getElementById("contactedLeads").innerText = contacted;
+  document.getElementById("convertedLeads").innerText = converted;
+}
+
+</script>
+
+</body>
+</html>
