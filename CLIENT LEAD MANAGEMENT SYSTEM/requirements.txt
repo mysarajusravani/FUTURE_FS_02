@@ -1,1 +1,20 @@
-abc
+Frontend:
+- HTML5
+- CSS3
+- JavaScript (ES6)
+
+Features:
+- Client Lead Management System (Mini CRM)
+- CRUD Operations (Create, Read, Update, Delete)
+- Search & Filter functionality
+- Dashboard Analytics (Lead counts)
+- LocalStorage (optional persistence)
+
+Browser Support:
+- Chrome
+- Firefox
+- Edge
+
+Tools Used:
+- VS Code
+- GitHub
