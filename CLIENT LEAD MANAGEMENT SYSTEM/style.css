@@ -1,0 +1,155 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body{
+    background:#1e1b4b;
+    color:white;
+    min-height:100vh;
+}
+
+.container{
+    width:90%;
+    max-width:1200px;
+    margin:30px auto;
+}
+
+.title{
+  text-align: center;
+}
+
+.form-section,
+.table-section{
+    background:#312e81;
+    padding:25px;
+    border-radius:12px;
+    margin-bottom:30px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.3);
+}
+h2{
+    margin-bottom:20px;
+    color:#ec4899;
+}
+form{
+    display:grid;
+    gap:15px;
+}
+
+input,
+select,
+textarea{
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+    outline:none;
+}
+
+button{
+    background:#ec4899;
+    color:white;
+    border:none;
+    padding:12px;
+    border-radius:8px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:scale(1.03);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:10px;
+}
+
+th{
+    background:#ec4899;
+    color:white;
+    padding:12px;
+}
+td{
+    padding:12px;
+    border-bottom:1px solid #334155;
+    text-align:center;
+}
+
+tr:hover{
+    background:#334155;
+}
+
+.status-new{
+    color:#22c55e;
+    font-weight:bold;
+}
+
+.status-contacted{
+    color:#f59e0b;
+    font-weight:bold;
+}
+
+.status-converted{
+    color:#ec4899;
+    font-weight:bold;
+}
+
+.edit-btn{
+    background:#f59e0b;
+    margin-right:5px;
+}
+
+.delete-btn{
+    background:#ef4444;
+    color:white;
+}
+
+@media(max-width:768px){
+
+    .container{
+        width:95%;
+    }
+
+    table{
+        display:block;
+        overflow-x:auto;
+    }
+
+    h1{
+        font-size:24px;
+    }
+}
+.stats{
+  display:flex;
+  gap:20px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+
+.stat-card{
+  background:#312e81;
+  padding:20px;
+  border-radius:12px;
+  min-width:180px;
+  text-align:center;
+}
+.stat-card h3{
+    color:#ec4899;
+    font-size:30px;
+}
+
+.stat-card p{
+    margin-top:8px;
+}
+.welcome{
+  text-align:left;
+  font-size:18px;
+  color:#cccccc;
+  margin-bottom:10px;
+}
